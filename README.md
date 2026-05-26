@@ -7,6 +7,10 @@ Technologies:
 - Tailwind CSS
 - Framer Motion (animations)
 
+Prerequisites:
+- Node.js and npm installed
+- Git installed
+
 Quick start:
 
 ```bash
