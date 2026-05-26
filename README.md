@@ -39,15 +39,12 @@ This project is ready for Vercel deployment (recommended for Next.js). Quick ste
 
 1. Create a GitHub repository and push the `platform-app/` folder.
 
-```bash
+```powershell
 cd "f:\\web d\\Projects\\udemy project part 1\\platform-app"
-git init
-git add .
-git commit -m "Initial prototype"
-# create remote on GitHub then:
-git remote add origin git@github.com:YOUR_USER/kidscode-platform.git
-git push -u origin main
+.\upload-to-github.ps1
 ```
+
+If prompted, paste your GitHub repository URL (SSH or HTTPS). This script sets the remote and pushes to `main`.
 
 2. On Vercel: Import Project → choose the GitHub repo → Framework: Next.js → Build: `npm run build`.
 

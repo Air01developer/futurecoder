@@ -1,22 +1,47 @@
-# Run these commands after installing Git and opening PowerShell in the platform-app folder.
+# Run this script after installing Git and opening PowerShell in the platform-app folder.
 
-# Initialize a new local repository
 if (-not (Test-Path .git)) {
     git init
 }
 
-# Stage all project files
 git add .
 
-# Create the initial commit
-if (-z (git log --oneline -1 2>$null)) {
-    git commit -m "Initial prototype for AI-powered frontend learning platform"
-} else {
-    Write-Host "A commit already exists. Skipping initial commit."
+$hasCommit = $false
+try {
+    git rev-parse --verify HEAD >$null 2>&1
+    $hasCommit = $true
+} catch {
+    $hasCommit = $false
 }
 
-Write-Host "Repository initialized and files staged."
-Write-Host "Add a GitHub remote and push using:"
-Write-Host "  git remote add origin git@github.com:YOUR_USER/kidscode-platform.git"
-Write-Host "  git push -u origin main"
+if (-not $hasCommit) {
+    git commit -m "Initial prototype for AI-powered frontend learning platform"
+} else {
+    git diff --cached --quiet
+    if ($LASTEXITCODE -ne 0) {
+        git commit -m "Update project files"
+    } else {
+        Write-Host "No staged changes to commit."
+    }
+}
+
+$remoteUrl = $null
+try {
+    $remoteUrl = git remote get-url origin 2>$null
+} catch {
+    $remoteUrl = $null
+}
+
+if (-not $remoteUrl) {
+    $remoteUrl = Read-Host "Enter GitHub repository URL (ssh or https)"
+    git remote add origin $remoteUrl
+}
+
+git push -u origin main
+
+if (Get-Command vercel -ErrorAction SilentlyContinue) {
+    Write-Host "Vercel CLI is installed. You can deploy with: vercel --prod"
+} else {
+    Write-Host "Vercel CLI is not installed. Install it to deploy from the terminal, or use the Vercel web dashboard."
+}
 Write-Host "If you need to rename the branch on GitHub, use: git push -u origin main"
