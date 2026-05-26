@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --brand: #6C3CE1;
+}
+
+body{
+  @apply bg-gray-50 text-gray-900;
+}
+
+.dark body{
+  @apply bg-[#070812] text-gray-100;
+}
+
+.code-editor{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Fira Code', monospace;
+  min-height: 280px;
+  border-radius: 12px;
+  border: 1px solid #e6e9ef;
+  resize: vertical;
+}
+
+.run-btn{
+  @apply bg-brand text-white rounded-full px-4 py-2 font-semibold;
+}
